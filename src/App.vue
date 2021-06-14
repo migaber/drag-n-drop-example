@@ -35,24 +35,51 @@ export default {
     const columns = document.querySelectorAll('.c-dnd-column'); // statuses columns
 
     draggables.forEach(draggableItem => {
-      draggableItem.addEventListener('dragstart', (e) => {
-        console.log('drag start', draggableItem, e)
+      draggableItem.addEventListener('dragstart', () => {
         draggableItem.classList.add('is-dragging');
       })
 
-      draggableItem.addEventListener('dragend', (e) => {
-        console.log('drag end', draggableItem, e)
+      draggableItem.addEventListener('dragend', () => {
         draggableItem.classList.remove('is-dragging');
       })
     });
 
     columns.forEach(column => {
       column.addEventListener('dragover', (e) => {
-        console.log('drag over', column, e)
+
+        const nextElementToDraggableItem = this.getIsDraggingNextElement(column, e.clientY);
         const draggableItem = document.querySelector('.is-dragging');
-        column.querySelector('ul').appendChild(draggableItem);
+
+        if (!nextElementToDraggableItem) {
+          column.querySelector('ul').appendChild(draggableItem);
+        } else {
+          column.querySelector('ul').insertBefore(draggableItem, nextElementToDraggableItem)
+        }
+
+        console.log(nextElementToDraggableItem);
       });
     })
+  },
+  methods: {
+    getIsDraggingNextElement(column, yPosition) {
+      const draggableItemsInCurrentContainer = [...column.querySelectorAll('[draggable=true]:not(.is-dragging)')];
+
+      return draggableItemsInCurrentContainer.reduce((closest, child) => {
+        // get dimentions of not draggable items in current container
+        const childBounds = child.getBoundingClientRect();
+
+        const offset = yPosition - childBounds.top
+
+        if (offset < 0 && offset > closest.offset) {
+          return {
+            offset,
+            element: child
+          }
+        } else {
+          return closest;
+        }
+      }, { offset: Number.NEGATIVE_INFINITY}).element
+    }
   }
 }
 </script>
