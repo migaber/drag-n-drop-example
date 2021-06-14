@@ -14,7 +14,7 @@
         <ul>
           <li draggable="true">Item 4</li>
           <li draggable="true">Item 5</li>
-          <li draggable="true">Item 5</li>
+          <li draggable="true">Item 6</li>
         </ul>
       </div>
       <div class="c-dnd-column">
@@ -32,7 +32,7 @@ export default {
   mounted() {
     console.log('mounted');
     const draggables = document.querySelectorAll('[draggable=true]'); // all draggable items
-    // const columns = document.querySelectorAll('.c-dnd-column'); // statuses columns
+    const columns = document.querySelectorAll('.c-dnd-column'); // statuses columns
 
     draggables.forEach(draggableItem => {
       draggableItem.addEventListener('dragstart', (e) => {
@@ -45,6 +45,14 @@ export default {
         draggableItem.classList.remove('is-dragging');
       })
     });
+
+    columns.forEach(column => {
+      column.addEventListener('dragover', (e) => {
+        console.log('drag over', column, e)
+        const draggableItem = document.querySelector('.is-dragging');
+        column.querySelector('ul').appendChild(draggableItem);
+      });
+    })
   }
 }
 </script>
