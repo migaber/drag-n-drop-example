@@ -39,6 +39,11 @@ export default {
         console.log('drag start', draggableItem, e)
         draggableItem.classList.add('is-dragging');
       })
+
+      draggableItem.addEventListener('dragend', (e) => {
+        console.log('drag end', draggableItem, e)
+        draggableItem.classList.remove('is-dragging');
+      })
     });
   }
 }
