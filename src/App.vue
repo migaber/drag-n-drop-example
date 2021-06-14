@@ -32,8 +32,14 @@ export default {
   mounted() {
     console.log('mounted');
     const draggables = document.querySelectorAll('[draggable=true]'); // all draggable items
-    const columns = document.querySelectorAll('.c-dnd-column'); // statuses columns
-    console.log(draggables, columns);
+    // const columns = document.querySelectorAll('.c-dnd-column'); // statuses columns
+
+    draggables.forEach(draggableItem => {
+      draggableItem.addEventListener('dragstart', (e) => {
+        console.log('drag start', draggableItem, e)
+        draggableItem.classList.add('is-dragging');
+      })
+    });
   }
 }
 </script>
@@ -68,11 +74,16 @@ ul {
 }
 
 .c-dnd-column li {
-  color: #f20;
+  color: #ff2200;
   padding: 8px 4px;
-  border: 1px solid red;
+  border: 1px solid #ac1700;
   margin: 4px 0;
   cursor: move;
+}
+
+.c-dnd-column li.is-dragging {
+  border-color: #fcb0a4;
+  background-color: #f5f5f5;
 }
 
 
