@@ -4,17 +4,17 @@
       <div class="c-dnd-column">
         <h2>Todo</h2>
         <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
+          <li draggable="true">Item 1</li>
+          <li draggable="true">Item 2</li>
+          <li draggable="true">Item 3</li>
         </ul>
       </div>
       <div class="c-dnd-column">
         <h2>Inprogress</h2>
         <ul>
-          <li>Item 4</li>
-          <li>Item 5</li>
-          <li>Item 5</li>
+          <li draggable="true">Item 4</li>
+          <li draggable="true">Item 5</li>
+          <li draggable="true">Item 5</li>
         </ul>
       </div>
       <div class="c-dnd-column">
@@ -31,6 +31,9 @@ export default {
   name: 'App',
   mounted() {
     console.log('mounted');
+    const draggables = document.querySelectorAll('[draggable=true]'); // all draggable items
+    const columns = document.querySelectorAll('.c-dnd-column'); // statuses columns
+    console.log(draggables, columns);
   }
 }
 </script>
@@ -69,6 +72,7 @@ ul {
   padding: 8px 4px;
   border: 1px solid red;
   margin: 4px 0;
+  cursor: move;
 }
 
 
